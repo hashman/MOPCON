@@ -2,6 +2,8 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+use Rollbar\Rollbar;
+
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
     dirname(__DIR__)
 ))->bootstrap();
@@ -64,6 +66,15 @@ $app->singleton(
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
+
+$appEnv = getenv('APP_ENV') ? getenv('APP_ENV') : 'production';
+
+if (getenv('ROLLBAR_TOKEN')) {
+    Rollbar::init([
+        'access_token' => getenv('ROLLBAR_TOKEN'),
+        'environment' => $appEnv,
+    ]);
+}
 
 /*
 |--------------------------------------------------------------------------
