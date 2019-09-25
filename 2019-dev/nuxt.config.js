@@ -189,7 +189,8 @@ module.exports = {
   },
   router: {
     // base: '/2019/',
-    base: path.resolve(__dirname, '/2019/'),
+      // base: path.resolve(__dirname, '/2019/'),
+    base: '/',
   },
 
   generate: {
