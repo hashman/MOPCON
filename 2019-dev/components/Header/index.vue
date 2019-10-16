@@ -13,7 +13,8 @@
                     <div v-if="nav.subNav.length > 0"
                         class="header__nav__item__icon"
                         :class="{active: nav.subIsOpen}"></div>
-                    <a :href="`.${nav.url}`"
+                    <a :href="`${nav.url}`"
+                        :target="setTarget(nav)"
                         class="header__nav__item__name"
                         :class="{disable: nav.subNav.length > 0}">
                         <span>{{$t(`navbar.${nav.name}`)}}</span>
@@ -47,21 +48,23 @@ export default {
             navList: [
                 {
                     name: 'home',
-                    url: '/',
+                    url: './',
                     subNav: [],
                     subIsOpen: false,
                     open: true,
+                    target_blank: false,
                 },
                 {
                     name: 'community',
-                    url: '/community',
+                    url: './community',
                     subNav: [],
                     subIsOpen: false,
                     open: process.env.routeCommunity,
+                    target_blank: false,
                 },
                 {
                     name: 'schedule',
-                    url: '/schedule',
+                    url: './schedule',
                     subNav: [
                         {
                             name: 'scheduleMain',
@@ -77,27 +80,39 @@ export default {
                     subIsOpen: false,
                     open:
                         process.env.routeSchedule || process.env.routeSchedule,
+                    target_blank: false,
                 },
                 {
                     name: 'speaker',
-                    url: '/speaker',
+                    url: './speaker',
                     subNav: [],
                     subIsOpen: false,
                     open: process.env.routeSpeaker,
+                    target_blank: false,
                 },
                 {
                     name: 'sponsor',
-                    url: '/sponsor',
+                    url: './sponsor',
                     subNav: [],
                     subIsOpen: false,
                     open: process.env.routeSponsor,
+                    target_blank: false,
                 },
                 {
                     name: 'ticket',
-                    url: '/ticket',
+                    url: './ticket',
                     subNav: [],
                     subIsOpen: false,
                     open: process.env.routeTicket,
+                    target_blank: false,
+                },
+                {
+                    name: 'hackmd',
+                    url: 'https://hackmd.io/@mopcon/2019',
+                    subNav: [],
+                    subIsOpen: false,
+                    open: true,
+                    target_blank: true,
                 },
             ],
         };
@@ -128,6 +143,9 @@ export default {
                 targetNav.subIsOpen = !targetNav.subIsOpen;
             }
         },
+        setTarget(row) {
+            return row.target_blank ? "_blank" : "_self";
+        }
     },
     mounted() {
         const getUtm = document.cookie.match(new RegExp("(^| )mopcon_utm=([^;]*)(;|$)"));
